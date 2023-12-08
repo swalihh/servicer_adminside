@@ -1,4 +1,5 @@
 import 'package:adminservice/resources/constant/colors.dart';
+import 'package:adminservice/view/acceptedusers.dart';
 import 'package:adminservice/view/status_page.dart';
 import 'package:floating_tabbar/Models/tab_item.dart';
 import 'package:floating_tabbar/floating_tabbar.dart';
@@ -21,15 +22,14 @@ class _HomeState extends State<Home> {
           onTap: () {},
           selectedLeadingIcon: const Icon(Icons.dashboard),
           title: const Text("Dashboard"),
-          tab: StatusPage()
+          tab:const StatusPage()
          // badgeCount: 10,
         ),
         TabItem(
           onTap: () {},
           selectedLeadingIcon: const Icon(Icons.badge),
           title: const Text("Servicers"),
-          tab: const Center(
-              child: Text("Servicers", style: TextStyle(fontSize: 30))),
+          tab: const AcceptedServicer()
         ),
         TabItem(
           onTap: () {},
@@ -38,6 +38,7 @@ class _HomeState extends State<Home> {
           tab: const Center(
               child: Text("Settings", style: TextStyle(fontSize: 30))),
         ),
+        
       
         
       ];

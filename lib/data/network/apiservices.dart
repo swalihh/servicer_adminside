@@ -49,14 +49,34 @@ class ApiServices {
     }
   }
 
+  // static EitherResponse<Map> patchApi(
+  //     var userData, String url) async {
+  //   final uri = Uri.parse(url);
+  //   final body = jsonEncode(userData);
+  //   // _headers['userId'] = token;
+  //   Map<String, dynamic> fetchedData = {};
+  //   try {
+  //     final response = await http.patch(uri, body: body, headers: _headers);
+  //     fetchedData = _getResponse(response);
+  //   } on SocketException {
+  //     return Left(InternetException());
+  //   } on http.ClientException {
+  //     return Left(RequestTimeOUtException());
+  //   } catch (e) {
+  //     return Left(BadRequestException());
+  //   }
+  //   return Right(fetchedData);
+  // }
+
+
   static EitherResponse<Map> patchApi(
-      var userData, String url, String token) async {
+       String url) async {
     final uri = Uri.parse(url);
-    final body = jsonEncode(userData);
-    _headers['userId'] = token;
+   
+    // _headers['userId'] = token;
     Map<String, dynamic> fetchedData = {};
     try {
-      final response = await http.patch(uri, body: body, headers: _headers);
+      final response = await http.patch(uri, headers: _headers);
       fetchedData = _getResponse(response);
     } on SocketException {
       return Left(InternetException());
@@ -67,7 +87,6 @@ class ApiServices {
     }
     return Right(fetchedData);
   }
-
   static EitherResponse deleteApi(String url, String userId) async {
     final uri = Uri.parse(url);
     _headers['userId'] = userId;

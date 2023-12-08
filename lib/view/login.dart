@@ -1,4 +1,5 @@
 import 'package:adminservice/bloc/bloc/servicer_bloc.dart';
+import 'package:adminservice/bloc/progress/bloc/progress_bloc.dart';
 import 'package:adminservice/resources/widgets/container.dart';
 import 'package:adminservice/resources/widgets/elevatedbutton.dart';
 import 'package:adminservice/resources/widgets/sizedbox.dart';
@@ -50,6 +51,8 @@ class Login extends StatelessWidget {
                     if (usernameController.text == 'admin' &&
                         passwordController.text == '1234') {
                          context.read<ServicerBloc>().add(UserDataFetchEvent());
+                         context.read<ProgressBloc>().add(AcceptedUserFetchEvent());
+
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => Home(),
                       ));
