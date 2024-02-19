@@ -1,9 +1,10 @@
-import 'package:adminservice/resources/constant/colors.dart';
+import 'package:adminservice/bloc/progress/bloc/progress_bloc.dart';
 import 'package:adminservice/view/acceptedusers.dart';
 import 'package:adminservice/view/status_page.dart';
 import 'package:floating_tabbar/Models/tab_item.dart';
 import 'package:floating_tabbar/floating_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -26,7 +27,10 @@ class _HomeState extends State<Home> {
          // badgeCount: 10,
         ),
         TabItem(
-          onTap: () {},
+          onTap: () {
+                  context.read<ProgressBloc>().add(AcceptedUserFetchEvent());
+
+          },
           selectedLeadingIcon: const Icon(Icons.badge),
           title: const Text("Servicers"),
           tab: const AcceptedServicer()

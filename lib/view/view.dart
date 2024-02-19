@@ -1,5 +1,5 @@
-import 'package:adminservice/bloc/bloc/servicer_bloc.dart';
 import 'package:adminservice/bloc/progress/bloc/progress_bloc.dart';
+import 'package:adminservice/bloc/servicer/servicer_bloc.dart';
 import 'package:adminservice/models/servicermodel.dart';
 import 'package:adminservice/resources/constant/colors.dart';
 import 'package:adminservice/resources/constant/fonts.dart';
@@ -113,7 +113,7 @@ class Views extends StatelessWidget {
                         Shimmer(
                           duration:const Duration(seconds: 3),
                           child: Container(
-                            height: screenSize.height * 0.3 - 50,
+                            height: screenSize.height * 0.3 - 60,
                             width: screenSize.width * 0.2 + 20,
                             decoration: BoxDecoration(
                               color: Webcolors.accentCanvasColor,

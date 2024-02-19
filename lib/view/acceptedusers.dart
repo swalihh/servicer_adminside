@@ -15,6 +15,7 @@ class AcceptedServicer extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: const Icon(Icons.timeline),
         backgroundColor: Webcolors.accentCanvasColor,
         title: const Text('Servicers'),
         centerTitle: true,
@@ -27,8 +28,8 @@ class AcceptedServicer extends StatelessWidget {
           child: BlocBuilder<ProgressBloc, ProgressState>(
             builder: (context, state) {
               if (state is AcceptedServicerDataFetchErrorState) {
-                return const CircularProgressIndicator();
-              } else if (state is AcceptedServicerDetailsFetchState) 
+                return  Center(child: Text(state.message,style:const TextStyle(color: Colors.white),));
+              } else if (state is AcceptedServicerDetailsFetchState && state.servicers.isNotEmpty ) 
               {
                 print(state);
                 print("list is ${state.servicers}");
@@ -41,7 +42,6 @@ class AcceptedServicer extends StatelessWidget {
                       state.servicers.length,
                       (int index) {
                         final servicer = state.servicers[index];
-                         print(servicer);
                         return AnimationConfiguration.staggeredGrid(
                           position: index,
                           duration: const Duration(milliseconds: 375),
@@ -56,7 +56,7 @@ class AcceptedServicer extends StatelessWidget {
                   ),
                 );
               }
-              return const SizedBox();
+              return const Center(child: Text('No data',style: TextStyle(color: Colors.white),),);
             },
           ),
         ),

@@ -1,3 +1,4 @@
+
 import 'package:adminservice/bloc/progress/bloc/progress_bloc.dart';
 import 'package:adminservice/models/servicermodel.dart';
 import 'package:adminservice/resources/constant/colors.dart';
@@ -8,7 +9,6 @@ import 'package:adminservice/resources/widgets/sizedbox.dart';
 import 'package:adminservice/resources/widgets/viewpagecontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 
 class Accepted extends StatefulWidget {
   final ServicerModel servcer;
@@ -42,7 +42,7 @@ class _AcceptedState extends State<Accepted> {
       child: Stack(
         children: [
           CustomContainer(
-            height: screenSize.height * 0.5,
+            height: screenSize.height * 0.5+20,
             width: screenSize.width * 0.5,
             child: Row(
               children: [
@@ -53,11 +53,11 @@ class _AcceptedState extends State<Accepted> {
                     Container(
                       height: screenSize.height * 0.2,
                       width: screenSize.width * 0.1,
-                      decoration: const BoxDecoration(
+                      decoration:  BoxDecoration(
                         color: Webcolors.accentCanvasColor,
-                        // image: DecorationImage(
-                        //     fit: BoxFit.contain,
-                        //     image: NetworkImage(servicer.servicerImage)),
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(widget.servcer.servicerImage)),
                       ),
                     ),
                     const TextFieldSpacing(),
@@ -123,14 +123,16 @@ class _AcceptedState extends State<Accepted> {
                           'Verification Document',
                           style: AppText.smallDark,
                         ),
-                        Shimmer(
-                          duration: const Duration(seconds: 3),
-                          child: Container(
-                            height: screenSize.height * 0.1 + 35,
-                            width: screenSize.width * 0.3,
-                            decoration: const BoxDecoration(
-                              color: Webcolors.accentCanvasColor,
-                            ),
+                        Container(
+                          
+                          height: screenSize.height * 0.1 + 35,
+                          width: screenSize.width * 0.3,
+                          decoration:  BoxDecoration(
+                            
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(widget.servcer.servicerDocument)),
+                            color: Webcolors.accentCanvasColor,
                           ),
                         ),
                       ],

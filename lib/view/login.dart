@@ -1,5 +1,6 @@
-import 'package:adminservice/bloc/bloc/servicer_bloc.dart';
+import 'package:adminservice/bloc/login/bloc/login_bloc.dart';
 import 'package:adminservice/bloc/progress/bloc/progress_bloc.dart';
+import 'package:adminservice/bloc/servicer/servicer_bloc.dart';
 import 'package:adminservice/resources/widgets/container.dart';
 import 'package:adminservice/resources/widgets/elevatedbutton.dart';
 import 'package:adminservice/resources/widgets/sizedbox.dart';
@@ -31,7 +32,7 @@ class Login extends StatelessWidget {
         ),
         child: Center(
           child: CustomContainer(
-            height: screenSize.height * 0.3,
+            height: screenSize.height * 0.3 + 20,
             width: screenSize.width * 0.3,
             child: Column(
               children: [
@@ -46,22 +47,32 @@ class Login extends StatelessWidget {
                   labelText: 'Password',
                 ),
                 const TextFieldSpacing(),
-                CustomElevatedButton(
-                  onPressed: () {
-                    if (usernameController.text == 'admin' &&
-                        passwordController.text == '1234') {
-                         context.read<ServicerBloc>().add(UserDataFetchEvent());
-                         context.read<ProgressBloc>().add(AcceptedUserFetchEvent());
-
+                BlocConsumer<LoginBloc, LoginState>(
+                  listener: (context, state) {
+                    if (state is AdminLoginErrorState) {
+                      ToastHandler.showErrorToast(context, state.message);
+                    } else if (state is AdminLoginSucessState) {
+                      context.read<ServicerBloc>().add(UserDataFetchEvent());
+                      context
+                          .read<ProgressBloc>()
+                          .add(AcceptedUserFetchEvent());
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Home(),
+                        builder: (context) => const Home(),
                       ));
-                    } else {
-                      ToastHandler.showErrorToast(
-                          context, "Invalid Username or Password");
                     }
                   },
-                  buttonText: 'Login',
+                  builder: (context, state) {
+                    bool isLoading = state is AdminLoginLoadingState;
+                    return CustomElevatedButton(
+                      showloader: isLoading,
+                      onPressed: () {
+                        context.read<LoginBloc>().add(UserLoginEvent(
+                            username: usernameController.text,
+                            password: passwordController.text));
+                      },
+                      buttonText: 'Login',
+                    );
+                  },
                 ),
               ],
             ),
@@ -71,4 +82,3 @@ class Login extends StatelessWidget {
     );
   }
 }
- 

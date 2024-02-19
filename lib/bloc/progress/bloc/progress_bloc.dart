@@ -12,6 +12,7 @@ class ProgressBloc extends Bloc<ProgressEvent, ProgressState> {
     on<ServicerAcceptedEvent>(acceptServicer);
     on<AcceptedUserFetchEvent>(acceptedServicers);
   }
+    List<ServicerModel> acceptedlist=[];
 
   FutureOr<void> rejectServicer(
       ServicerRejectedEvent event, Emitter<ProgressState> emit) async {
@@ -23,6 +24,7 @@ class ProgressBloc extends Bloc<ProgressEvent, ProgressState> {
       emit(RejectErrorState(message: error.message));
     }, (responce) {
       emit(RejectedState());
+      emit(AcceptedServicerDetailsFetchState(servicers: acceptedlist));
     });
   }
 
@@ -36,6 +38,7 @@ class ProgressBloc extends Bloc<ProgressEvent, ProgressState> {
       emit(AcceptErrorState(message: error.message));
     }, (response) {
       emit(AccecptSuccessState());
+      emit(AcceptedServicerDetailsFetchState(servicers: acceptedlist));
     });
   }
 
@@ -46,11 +49,11 @@ class ProgressBloc extends Bloc<ProgressEvent, ProgressState> {
       emit(AcceptedServicerDataFetchErrorState(message: error.message));
     }, (response) {
       final List rawdata= response['accepted'] ;
-      final List<ServicerModel> acceptedlist=rawdata.map((e) => ServicerModel.fromJson(e)).toList();  
-      print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-      print(acceptedlist);
+       acceptedlist=rawdata.map((e) => ServicerModel.fromJson(e)).toList();  
+   
 
       emit(AcceptedServicerDetailsFetchState(servicers:acceptedlist ));
+
     });
   }
 }

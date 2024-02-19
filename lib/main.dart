@@ -1,12 +1,15 @@
-import 'package:adminservice/bloc/bloc/servicer_bloc.dart';
+import 'package:adminservice/bloc/login/bloc/login_bloc.dart';
 import 'package:adminservice/bloc/progress/bloc/progress_bloc.dart';
+import 'package:adminservice/bloc/servicer/servicer_bloc.dart';
+import 'package:adminservice/data/sharedpreferences/login.dart';
 import 'package:adminservice/resources/constant/colors.dart';
-import 'package:adminservice/view/home.dart';
-import 'package:adminservice/view/login.dart';
+import 'package:adminservice/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Sharedprfe.instance.init();
   runApp(const MyApp());
 }
 
@@ -17,17 +20,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ServicerBloc(),),
-        BlocProvider(create: (context) => ProgressBloc(),)
-   
+        BlocProvider(
+          create: (context) => ServicerBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProgressBloc(),
+        ), 
+        BlocProvider(
+          create: (context) => LoginBloc(),
+        )
       ],
       child: MaterialApp(
+
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          useMaterial3: false,
           primaryColor: Webcolors.primaryColor,
           canvasColor: Webcolors.canvasColor,
         ),
-        home: Login(),
+        home: const Splash(),
       ),
     );
   }

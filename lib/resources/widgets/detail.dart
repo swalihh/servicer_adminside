@@ -15,8 +15,8 @@ class DetailWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('$label:', style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500, color:Colors.deepOrange)), 
-          Text(label2, style: TextStyle(fontSize: 16, color: Webcolors.white)), 
+          Text('$label:', style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500, color:Colors.deepOrange)), 
+          Text(label2, style: const TextStyle(fontSize: 16, color: Webcolors.white,overflow: TextOverflow.ellipsis)), 
 
         ],
       ),

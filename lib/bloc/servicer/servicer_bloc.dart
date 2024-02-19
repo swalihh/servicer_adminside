@@ -11,19 +11,18 @@ class ServicerBloc extends Bloc<ServicerEvent, ServicerState> {
   }
 
   FutureOr<void> fetchServicer(
-    
       UserDataFetchEvent event, Emitter<ServicerState> emit) async {
-
+        print('got in');
     final userDetails = await ServicerRepo().getallServicer();
-
+ print(userDetails);
     userDetails.fold((error) {
-
       emit(ServicerDataFetchErrorState(message: error.message));
     }, (response) {
-      final List Rawdata = response['pending'];
+      final List rawdata = response['pending'];
 
-      final List<ServicerModel> servicers = Rawdata.map((e) => ServicerModel.fromJson(e)).toList();
-   
+      final List<ServicerModel> servicers =
+          rawdata.map((e) => ServicerModel.fromJson(e)).toList();
+
       emit(ServicerDataFetchSuccessState(servicers: servicers));
     });
   }

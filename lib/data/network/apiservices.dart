@@ -6,10 +6,14 @@ import 'package:http/http.dart' as http;
 
 typedef   EitherResponse<T>= Future <Either<AppException,T>>;
 class ApiServices {
-  static final _headers = {'Content-Type': 'application/json'};
+  static final _headers = {'Content-Type': 'application/json','Access-Control-Allow-Origin': 'header'};
 
-  static EitherResponse<Map> postApi(var rawData, String url,
+  static EitherResponse<Map> postApi(var rawData, String url,[String? token]
      ) async {
+       if(token!=null){
+        _headers['autharization']=token;
+       }
+
     Map fetchedData = {};
     final uri = Uri.parse(url);
     final body = jsonEncode(rawData);
@@ -21,23 +25,29 @@ class ApiServices {
     } on SocketException {
       print('socket ');
       return Left(InternetException());
-    } on http.ClientException {
-      
-      return Left(RequestTimeOUtException());
+    // } on http.ClientException {
+    //   print('object $');
+    //   return Left(RequestTimeOUtException());
     } catch (e) {
       print(e);
       return Left(BadRequestException());
     }
   }
 
-  static EitherResponse getApi(String url, [String? userId]) async {
+  static EitherResponse getApi(String url, [String? userId , String? token]) async {
     final uri = Uri.parse(url);
+    print('token $token');
+    if(token!=null){
+        _headers['autharization'] = token;
+       }
     if (userId != null) {
       _headers['userId'] = userId;
     }
     dynamic fetchedData;
     try {
+      print(_headers);
       final response = await http.get(uri, headers: _headers);
+      print(response.body);
       fetchedData = _getResponse(response);
       return Right(fetchedData);
     } on SocketException {
@@ -70,7 +80,11 @@ class ApiServices {
 
 
   static EitherResponse<Map> patchApi(
-       String url) async {
+       String url,[String? token]) async {
+
+        if(token!=null){
+        _headers['autharization']= token;
+       }
     final uri = Uri.parse(url);
    
     // _headers['userId'] = token;
@@ -87,7 +101,10 @@ class ApiServices {
     }
     return Right(fetchedData);
   }
-  static EitherResponse deleteApi(String url, String userId) async {
+  static EitherResponse deleteApi(String url, String userId,[String? token]) async {
+    if(token!=null){
+        _headers['autharization']= token;
+       }
     final uri = Uri.parse(url);
     _headers['userId'] = userId;
     dynamic fetchedData;
